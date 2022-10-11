@@ -13,5 +13,5 @@ stations = ('Zwolle','Sittard','Oss')
 station = random.choice(stations)
 
 outfile = open ('Mening.txt', 'a')
-outfile.write(naam+';'+mening+';'+data+';'+station)
-print(naam+';'+mening+';'+data+';'+station)
+outfile.write(naam+','+mening+','+data+','+station)
+print(naam+','+mening+','+data+','+station)
