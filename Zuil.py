@@ -1,24 +1,27 @@
 from datetime import datetime
 import random
 
-now = datetime.now()
-data = now.strftime("%m/%d/%Y,%H:%M:%S")
+def stationzuil():
+    """
 
-stations = ('Zwolle','Sittard','Oss')
-station = random.choice(stations)
+    :return:
+    """
+    now = datetime.now()
+    data = now.strftime("%m/%d/%Y %H:%M:%S")
 
-naam = input('wat is je naam?')
-if naam == '':
-    naam = 'Anoniem'
+    stations = ('Zwolle','Sittard','Oss')
+    station = random.choice(stations)
 
-mening = input('wat is jou mening?')
+    naam = input('wat is je naam?')
+    if naam == '':
+        naam = 'Anoniem'
 
-if len(mening) > 140:
-    print('je mening is te lang!')
-else:
-    outfile = open ('Mening.txt', 'a')
-    outfile.write('\n'+naam+','+mening+','+data+','+station)
-    print(naam+','+mening+','+data+','+station)
+    mening = input('wat is jou mening?')
 
-
-
+    if len(mening) > 140:
+        print('je mening is te lang!')
+    else:
+        outfile = open ('Mening.txt', 'a')
+        outfile.write(naam+'|'+mening+'|'+data+'|'+station+'\n')
+        print(naam+'|'+mening+'|'+data+'|'+station)
+#def moderator():
