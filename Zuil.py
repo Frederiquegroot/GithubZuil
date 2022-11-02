@@ -27,9 +27,12 @@ def stationzuil():
         outfile = open ('Mening.txt', 'a')
         outfile.write(naam+';'+mening+';'+data+';'+station+'\n')
         print(naam+';'+mening+';'+data+';'+station)
-stationzuil()
+#stationzuil()
 
 def moderatie():
+    now = datetime.now()
+    data = now.strftime("%m/%d/%Y %H:%M:%S")
+
     outfile = open('mening.txt', 'r')
     regels = outfile.readlines()
     for regel in regels:
@@ -45,14 +48,17 @@ def moderatie():
 
     if beoordeling == 'y':
       outfile= open('Mening.txt', 'a')
-      outfile.write(nmoderator + ';' +emailmoderator  + ';' + beoordeling + ';' + '\n')
-      print(nmoderator+ ';' + emailmoderator + ';' + beoordeling+ ';')
+      outfile.write(nmoderator + ';' + emailmoderator + ';' + data +';' + beoordeling + ';' + '\n')
+      print(nmoderator + ';' + emailmoderator + ';'+ data + ';' + beoordeling + ';')
+
+    elif beoordeling =='n':
+     outfile = open('Mening.txt', 'a')
+     outfile.write(nmoderator + ';' + emailmoderator + ';' + data + ';' + beoordeling + ';' + '\n')
+     print(nmoderator + ';' + emailmoderator + ';' + data + ';' + beoordeling + ';')
 
     else:
-     beoordeling =='n'
-     outfile = open('Mening.txt', 'a')
-     outfile.write(nmoderator + ';' + emailmoderator + ';' + beoordeling + ';' + '\n')
-     print(nmoderator + ';' + emailmoderator + ';' + beoordeling + ';')
+        print('typ alleen y of n in')
+
 moderatie()
 
 root = Tk()
@@ -85,8 +91,7 @@ berichtlabel =Label(master=root,
 berichtlabel.pack(pady=(10,2),padx=(10,15))
 
 berichtlabel.pack()
-#enter= Button(master=root,text='Enter', command = )
-#button.pack(pady=50)
+
 
 w = Entry(master=root)
 w.pack(pady=0,padx=15)
