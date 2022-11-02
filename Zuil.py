@@ -29,20 +29,30 @@ def stationzuil():
         print(naam+';'+mening+';'+data+';'+station)
 #stationzuil()
 
+def psycopg2():
+    connection_string= "host='localhost' dbname='zuil' FA user='postgres' password='geheim'"
+    conn = psycopg2.connect(connection_string)
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    insert="INSERT INTO beoordeling values()"
+
+
+    cursor.execute(insert)
+    #records = cursor.fetchall()
+    conn.close
+
 def moderatie():
     now = datetime.now()
     data = now.strftime("%m/%d/%Y %H:%M:%S")
 
     outfile = open('mening.txt', 'r')
     regels = outfile.readlines()
+    nmoderator = input('wat is je naam:')
+    emailmoderator = input('wat is je email:')
     for regel in regels:
-        berichtInfo = regel.split(';')
-        print(berichtInfo)
-        bericht = berichtInfo[1]
+        berichtmening = regel.split(';')
 
-        print(bericht)
-        nmoderator= input('wat is je naam:')
-        emailmoderator=input('wat is je email:')
+        print(berichtmening[1])
         beoordeling = input('typ y voor goedgekeurd en n voor foutgekeurd: ')
 
 
@@ -58,6 +68,10 @@ def moderatie():
 
     else:
         print('typ alleen y of n in')
+
+    outfile.close()
+    outfile= open('mening.txt','w')
+    outfile.close()
 
 moderatie()
 
@@ -97,3 +111,4 @@ w = Entry(master=root)
 w.pack(pady=0,padx=15)
 
 root.mainloop()
+
