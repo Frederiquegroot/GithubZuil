@@ -2,17 +2,21 @@ from datetime import datetime
 import random
 import psycopg2
 from tkinter import *
-def psycopg2():
+def psycopg2(beoordelingID,naamMening,tijd,datum,tijdBeoordeling,datumBeoordeling,station_stad,naamModerator):
+
+
     connection_string= "host='localhost' dbname='zuil' FA user='postgres' password='geheim'"
     conn = psycopg2.connect(connection_string)
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-    insert="INSERT INTO beoordeling values()"
+    insert="INSERT INTO bericht values(beoordelingID,naamMening,tijd,datum,tijdBeoordeling,DatumBeoordeling,station_stad,naamModerator)" \
+           "values(%s,%s,%s,%s,%s,%s,%s,%s"
 
 
-    cursor.execute(insert)
-    #records = cursor.fetchall()
-    conn.close
+    data = (beoordelingID,naamMening,tijd,datum,tijdBeoordeling,datumBeoordeling,station_stad,naamModerator)
+    cursor.execute(insert, data)
+    conn.commit()
+    conn.close()
 
 def moderatie():
     now = datetime.now()
