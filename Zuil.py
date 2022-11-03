@@ -8,7 +8,7 @@ def stationzuil():
     :return:
     """
     now = datetime.now()
-    data = now.strftime("%m/%d/%Y %H:%M:%S")
+    data = now.strftime("%m/%d/%Y;%H:%M:%S")
 
     stations = ('Zwolle','Sittard','Oss')
     station = random.choice(stations)
