@@ -7,8 +7,8 @@ import json
 from PIL import Image,ImageTk
 def weatherstationscherm():
     stationscherm=input('op welk station ben je?')
-    if stationscherm == 'zwolle' or stationscherm == 'oss' or stationscherm == 'sittard':
-        if stationscherm == 'zwolle':
+    if stationscherm == 'zwolle' or stationscherm == 'oss' or stationscherm == 'sittard': #zodat ze het goede stationscherm voor hun krijgen
+        if stationscherm == 'zwolle': # voor de weatherapp coordinaten zodat het goede weerbericht op beeld komt
             lon = '6.0830219'
             lat = '52.5167747'
         elif stationscherm  == 'oss':
@@ -20,20 +20,20 @@ def weatherstationscherm():
     else:
         print('vul een geldig station in')
     weatherapp = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&lang=nl&appid=bf86466a3e5f7265d40460a017a86ae6')
-    omschrijving = json.loads(weatherapp.text)['weather']
+    omschrijving = json.loads(weatherapp.text)['weather'] # om weatherapp te requesten en vragen voor een response van het weer en de omschrijving ervan van die coordinaten
     weerbericht= json.loads(weatherapp.text)['main']
     print(omschrijving[0]['description'])
     print(weerbericht['temp'],'C')
     print(omschrijving)
 
-    root = Tk()
+    root = Tk() # gui bestand
 
     connection_string = "host='localhost' dbname='zuilfa3' user='postgres' password='Molly123fred!'"
-    conn = psycopg2.connect(connection_string)  # get a connection with the database
+    conn = psycopg2.connect(connection_string)  # om een connectie met de database weer te krjgen
     cursor = conn.cursor()
-    query = """select naamMening,bericht,datum,tijd,bericht.stationstad,station.ovfiets,station.lift,station.pr,station.toilet from bericht 
+    query = """select naamMening,bericht,datum,tijd,bericht.stationstad,station.ovfiets,station.lift,station.pr,station.toilet from bericht  
     inner join station on station.stationstad = bericht.stationstad
-    order by "beoordelingid" desc limit 5;""" # the string
+    order by "beoordelingid" desc limit 5;""" # om de laaste 5 berichten uit mijn database te halen zodat die op het scherm kunnen verschijnen
 
     cursor.execute(query)
     records = cursor.fetchall() # retrieve the records from the database
@@ -41,7 +41,7 @@ def weatherstationscherm():
     print(records)
     r=2
 
-    for record in records:
+    for record in records: # dit checkt of in de database bij de verschillende stations true or false staat zodat de goede plaatjes tevoorschijn komen
         #print(record[0])
         c=0
         p=0
@@ -89,7 +89,7 @@ def weatherstationscherm():
                              text=item,
                              fg='blue',
                              bg='yellow',
-                             font=('Ariel', 10))
+                             font=('Ariel', 10)) # labels voor alle tekst in het gui scherm
                 label1.grid(row=r,column=c)
                 c+=1
         r+=1

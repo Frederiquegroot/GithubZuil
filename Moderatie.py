@@ -2,6 +2,8 @@ from datetime import datetime
 import random
 import psycopg2
 from tkinter import *
+
+# dit zorgt dat de database in sql is gekoppeld aan dit python bestand zodat als er de meningen beoordeeld zijn en goedgekeurd kunnen ze in de database worden geinsert
 def psycopg(naammening,bericht,datum,tijd,stationstad,tijdbeoordeling,datumbeoordeling,naammoderator):
 
 
@@ -9,7 +11,7 @@ def psycopg(naammening,bericht,datum,tijd,stationstad,tijdbeoordeling,datumbeoor
     conn = psycopg2.connect(connection_string)
     cursor = conn.cursor()
 
-    insert="""INSERT INTO bericht(beoordelingid,naammening,tijd,datum,tijdbeoordeling,Datumbeoordeling,stationstad,naammoderator,bericht)
+    insert="""INSERT INTO bericht(beoordelingid,naammening,tijd,datum,tijdbeoordeling,Datumbeoordeling,stationstad,naammoderator,bericht) 
             VALUES(DEFAULT,%s,%s,%s,%s,%s,%s,%s,%s)"""
 
 
@@ -24,7 +26,7 @@ def moderatie():
     datumbeoordeling = databeoordeling.split(';')[0]
     tijdbeoordeling = databeoordeling.split(';')[1]
 
-    outfile = open('mening.txt', 'r')
+    outfile = open('mening.txt', 'r')  # haalt de mening uit het txt bestand en split het zodat ze alleen de naam en het bericht zien
     regels = outfile.readlines()
     moderator = input('wat is je naam:')
     emailmoderator = input('wat is je email:')
@@ -38,14 +40,14 @@ def moderatie():
 
         if beoordeling == 'y':
             psycopg(berichtmening[0], berichtmening[1], berichtmening[2], berichtmening[3], berichtmening[4],
-                 tijdbeoordeling, datumbeoordeling, moderator)
+                 tijdbeoordeling, datumbeoordeling, moderator) # zorgt dat als het is goedgekeurd het netjes in de database wordt gezet
         elif beoordeling =='n':
             print('.')
         else:
-            print('typ alleen y of n in')
+            print('typ alleen y of n in') # foutmelding als ze geen y of n typen
 
     outfile.close()
-    #outfile= open('mening.txt','w')
-    #outfile.close()
+    outfile= open('mening.txt','w')  #maakt de hele file leeg nadat alles is beoordeeld
+    outfile.close()
 
 moderatie()
