@@ -10,7 +10,7 @@ def stationzuil():
     now = datetime.now()
     data = now.strftime("%m/%d/%Y;%H:%M:%S")
 
-    stations = ('Zwolle','Sittard','Oss')
+    stations = ('Oss','Sittard','Zwolle')
     station = random.choice(stations)
 
     naam = input('wat is je naam?')

@@ -2,19 +2,19 @@ from datetime import datetime
 import random
 import psycopg2
 from tkinter import *
-def psycopg(naamMening,bericht,datum,tijd,station_stad,tijdBeoordeling,datumBeoordeling,naamModerator):
+def psycopg(naammening,bericht,datum,tijd,stationstad,tijdbeoordeling,datumbeoordeling,naammoderator):
 
 
-    connection_string= "host='localhost' dbname='zuilFA' user='postgres' password='Molly123fred!'"
+    connection_string= "host='localhost' dbname='zuilfa3' user='postgres' password='Molly123fred!'"
     conn = psycopg2.connect(connection_string)
     cursor = conn.cursor()
 
-    insert="""INSERT INTO bericht(beoordelingID,naamMening,tijd,datum,tijdBeoordeling,DatumBeoordeling,station_stad,naammoderator,bericht)
+    insert="""INSERT INTO bericht(beoordelingid,naammening,tijd,datum,tijdbeoordeling,Datumbeoordeling,stationstad,naammoderator,bericht)
             VALUES(DEFAULT,%s,%s,%s,%s,%s,%s,%s,%s)"""
 
 
-    data = (naamMening,tijd,datum,tijdBeoordeling,datumBeoordeling,station_stad,naamModerator,bericht)
-    cursor.execute(insert, data)
+    data = (naammening,tijd,datum,tijdbeoordeling,datumbeoordeling,stationstad.split('\n')[0],naammoderator,bericht)
+    cursor.execute(insert,data)
     conn.commit()
     conn.close()
 
@@ -39,14 +39,8 @@ def moderatie():
         if beoordeling == 'y':
             psycopg(berichtmening[0], berichtmening[1], berichtmening[2], berichtmening[3], berichtmening[4],
                  tijdbeoordeling, datumbeoordeling, moderator)
-
-
         elif beoordeling =='n':
-
-            outfile = open('Mening.txt', 'a')
-            outfile.write(moderator + ';' + emailmoderator + ';' + databeoordeling + ';' + beoordeling + ';' + '\n')
-            print(moderator + ';' + emailmoderator + ';' + databeoordeling + ';' + beoordeling + ';')
-
+            print('.')
         else:
             print('typ alleen y of n in')
 
